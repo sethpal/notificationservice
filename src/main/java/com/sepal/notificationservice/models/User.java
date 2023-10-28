@@ -4,6 +4,6 @@ public class User extends BaseModel{
 
     String firstName;
     String lastName;
-    Message message;
+    Notification message;
     ContactType channelType;
 }
