@@ -1,6 +1,6 @@
 package com.sepal.notificationservice.controlers;
 
-import com.sepal.notificationservice.dtos.User;
+import com.sepal.notificationservice.dtos.NotificationDto;
 import com.sepal.notificationservice.producer.RabbitMQJsonProducer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ public class JsonMessageController {
 
 
     @PostMapping("/publish")
-    public ResponseEntity<String> sendJsonMessage(@RequestBody User user)
+    public ResponseEntity<String> sendJsonMessage(@RequestBody NotificationDto user)
     {
         jsonProducer.sendJsonMessage(user);
         return ResponseEntity.ok("Json Message Sent to RabbitMQ..............");

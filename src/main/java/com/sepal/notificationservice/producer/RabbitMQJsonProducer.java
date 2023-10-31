@@ -1,6 +1,6 @@
 package com.sepal.notificationservice.producer;
 
-import com.sepal.notificationservice.dtos.User;
+import com.sepal.notificationservice.dtos.NotificationDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,7 +22,7 @@ public class RabbitMQJsonProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendJsonMessage(User user)
+    public void sendJsonMessage(NotificationDto user)
     {
     LOGGER.info(String.format("Json Message Sent--> %s", user.toString()));
     rabbitTemplate.convertAndSend(exchange,jsonRoutingKey,user);

@@ -27,7 +27,7 @@ public class SendSMSService {
             LOGGER.info("SMS Sent successfully....." + message.getStatus());
         }catch (Exception ex)
         {
-            LOGGER.info("Kindly check if you mobile number is in verified account....." + ex.getMessage());
+            LOGGER.error("Kindly check if you mobile number is in verified account.....Error-->" + ex.getMessage());
         }
 
     }

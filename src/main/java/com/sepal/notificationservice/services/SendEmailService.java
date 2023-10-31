@@ -18,17 +18,23 @@ public class SendEmailService {
     }
 
     public void sendEmail(
+            String fromMail,
             String toEmail,
             String subject,
             String body)
     {
-        SimpleMailMessage message =new SimpleMailMessage();
-        message.setFrom("tpulse385@gmail.com");
-        message.setTo(toEmail);
-        message.setText(body);
-        message.setSubject(subject);
-        mailSender.send(message);
-        LOGGER.info("Mail Sent Successfully.........");
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromMail);
+            message.setTo(toEmail);
+            message.setText(body);
+            message.setSubject(subject);
+            mailSender.send(message);
+            LOGGER.info("Mail Sent Successfully.........");
+        }catch(Exception ex)
+        {
+            LOGGER.error("Error -->" + ex.getMessage());
+        }
     }
 
 
