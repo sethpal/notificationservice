@@ -19,14 +19,14 @@ public class SendEmailService {
 
     public void sendEmail(
             String toEmail,
-            String subbject,
+            String subject,
             String body)
     {
         SimpleMailMessage message =new SimpleMailMessage();
         message.setFrom("tpulse385@gmail.com");
         message.setTo(toEmail);
         message.setText(body);
-        message.setSubject(subbject);
+        message.setSubject(subject);
         mailSender.send(message);
         LOGGER.info("Mail Sent Successfully.........");
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1")
 public class JsonMessageController {
-    private RabbitMQJsonProducer jsonProducer;
+    private final RabbitMQJsonProducer jsonProducer;
 
     public JsonMessageController(RabbitMQJsonProducer jsonProducer) {
         this.jsonProducer = jsonProducer;

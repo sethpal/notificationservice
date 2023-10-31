@@ -1,8 +1,8 @@
 package com.sepal.notificationservice.models;
 
 
-public class ContactType {
-
-    String type; //Enum
-    String contact;
+public enum ContactType {
+    EMAIL,
+    PHONE,
+    PHONE_N_EMAIL
 }
