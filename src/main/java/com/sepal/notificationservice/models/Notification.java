@@ -1,10 +1,12 @@
 package com.sepal.notificationservice.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -13,9 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Notification extends BaseModel{
 
-    String messageDetails;
-    Status status;
-   // NotificationType
-    String destination;
-
+    private String messageDetails;
+    private Status status;
+    private Long user_id;
 }

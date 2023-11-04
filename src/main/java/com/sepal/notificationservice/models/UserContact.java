@@ -5,17 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Primary;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseModel{
+public class UserContact extends BaseModel{
 
-    String firstName;
-    String lastName;
-   @OneToOne
-    Notification notification;
-   ContactType channelType;
+    private String email;
+    private String mobile;
+
 }

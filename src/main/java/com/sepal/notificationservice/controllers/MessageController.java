@@ -1,12 +1,11 @@
-package com.sepal.notificationservice.controlers;
+package com.sepal.notificationservice.controllers;
 
-import com.rabbitmq.client.Return;
 import com.sepal.notificationservice.producer.RabbitMQProducer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/v1")
+//@RestController
+//@RequestMapping("/api/v1")
 public class MessageController {
 private RabbitMQProducer producer;
 
@@ -14,7 +13,7 @@ private RabbitMQProducer producer;
         this.producer = producer;
     }
 
-    @GetMapping("/publish")
+   // @GetMapping("/publish")
     public ResponseEntity<String> sendMessage(@RequestParam("message") String message)
     {
         producer.sendMessage(message);

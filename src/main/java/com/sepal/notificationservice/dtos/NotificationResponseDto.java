@@ -3,9 +3,6 @@ package com.sepal.notificationservice.dtos;
 import lombok.Data;
 
 @Data
-public class NotificationDto {
-    String messageDetails;
+public class NotificationResponseDto {
     String status;
-    UserDto userDto;
-
 }

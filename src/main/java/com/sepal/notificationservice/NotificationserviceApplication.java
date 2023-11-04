@@ -11,8 +11,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
 
+
 @SpringBootApplication
 @EnableConfigurationProperties
+
 public class NotificationserviceApplication {
 
 	@Autowired

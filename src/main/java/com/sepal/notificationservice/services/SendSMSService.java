@@ -18,7 +18,7 @@ public class SendSMSService {
 
     public void sendSMS(String to, String sms) {
         try {
-            Message message = Message
+            Message  message = Message
                     .creator(new PhoneNumber(to)
                             , new PhoneNumber(twilioConfig.getFromNumber())
                             , sms)

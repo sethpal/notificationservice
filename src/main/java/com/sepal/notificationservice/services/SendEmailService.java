@@ -30,7 +30,7 @@ public class SendEmailService {
             message.setText(body);
             message.setSubject(subject);
             mailSender.send(message);
-            LOGGER.info("Mail Sent Successfully.........");
+            LOGGER.info("Mail Sent Successfully........."+mailSender);
         }catch(Exception ex)
         {
             LOGGER.error("Error -->" + ex.getMessage());
