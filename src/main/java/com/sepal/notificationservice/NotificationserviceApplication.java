@@ -11,6 +11,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.event.EventListener;
 
+import java.util.Base64;
+
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -23,10 +25,16 @@ public class NotificationserviceApplication {
 	@PostConstruct
 	public void setup()
 	{
-		Twilio.init(twilioConfig.getAccountSID(),twilioConfig.getAuthToken());
+
+		Twilio.init(decodeValue(twilioConfig.getAccountSID()),decodeValue(twilioConfig.getAuthToken()));
 
 	}
 
+	private String decodeValue(String encodedValue)
+	{
+		byte[] decodedBytes = Base64.getDecoder().decode(encodedValue);
+        return new String(decodedBytes);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationserviceApplication.class, args);
 	}

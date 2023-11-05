@@ -83,6 +83,7 @@ public class RabbitMQJsonConsumner {
             notification.setStatus((Status.DELIVERED));
             notification.setUser_id(notificationDto.getUserid());
             notificationRepository.save(notification);
+
             notificationStatus = String.valueOf(Status.DELIVERED);
         }
     }

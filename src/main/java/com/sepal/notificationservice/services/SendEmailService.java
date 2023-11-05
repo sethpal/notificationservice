@@ -1,5 +1,7 @@
 package com.sepal.notificationservice.services;
 
+import com.sepal.notificationservice.dtos.NotificationResponseDto;
+import com.sepal.notificationservice.models.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,12 +19,13 @@ public class SendEmailService {
         this.mailSender = mailSender;
     }
 
-    public void sendEmail(
+    public NotificationResponseDto sendEmail(
             String fromMail,
             String toEmail,
             String subject,
             String body)
     {
+        NotificationResponseDto notificationResponseDto=new NotificationResponseDto();
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromMail);
@@ -31,11 +34,18 @@ public class SendEmailService {
             message.setSubject(subject);
             mailSender.send(message);
             LOGGER.info("Mail Sent Successfully........."+mailSender);
+            notificationResponseDto.setStatus(String.valueOf(Status.DELIVERED));
         }catch(Exception ex)
         {
             LOGGER.error("Error -->" + ex.getMessage());
+            notificationResponseDto.setStatus(String.valueOf(Status.FAILED));
         }
+        return notificationResponseDto;
     }
 
+    public String sendMail()
+    {
+        return "SENT";
+    }
 
 }
