@@ -28,13 +28,10 @@ public class JsonMessageController {
     @PostMapping("/publish")
     public NotificationResponseDto sendJsonMessage(@RequestBody NotificationRequestDto user)
     {
+        String notification_added_in_Queue="Notification sent to registered email and mobile, kindly check your email/mobile";
         jsonProducer.sendJsonMessage(user);
         NotificationResponseDto notificationResponseDto =new NotificationResponseDto();
-        if(rabbitMQJsonConsumner.getNotificationStatus()==null) {
-            notificationResponseDto.setStatus(String.valueOf(Status.FAILED));
-        }else{
-            notificationResponseDto.setStatus(rabbitMQJsonConsumner.getNotificationStatus());
-        }
+        notificationResponseDto.setStatus(notification_added_in_Queue);
         return notificationResponseDto;
     }
 }
