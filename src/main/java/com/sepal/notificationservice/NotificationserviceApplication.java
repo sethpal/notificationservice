@@ -25,16 +25,11 @@ public class NotificationserviceApplication {
 	@PostConstruct
 	public void setup()
 	{
-
-		Twilio.init(decodeValue(twilioConfig.getAccountSID()),decodeValue(twilioConfig.getAuthToken()));
-
+		Twilio.init(twilioConfig.decodeValue(twilioConfig.getAccountSID())
+				,twilioConfig.decodeValue(twilioConfig.getAuthToken()));
 	}
 
-	private String decodeValue(String encodedValue)
-	{
-		byte[] decodedBytes = Base64.getDecoder().decode(encodedValue);
-        return new String(decodedBytes);
-	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationserviceApplication.class, args);
 	}

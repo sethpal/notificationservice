@@ -57,9 +57,7 @@ public class SMSSericeTest {
     @Test
     void encodeValue()
     {
-        //twilio.accountSID=AC5527db0838d6a6ebc24206d9a2c85e4e
-       // twilio.authToken=b436fa347b2c970e5a93000eda3053ef
-        String originalInput = "AC5527db0838d6a6ebc24206d9a2c85e4e";
+        String originalInput = "test input";
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
         System.out.println(encodedString);
         byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
@@ -71,9 +69,7 @@ public class SMSSericeTest {
     @Test
     void encodeValue1()
     {
-        //twilio.accountSID=AC5527db0838d6a6ebc24206d9a2c85e4e
-        // twilio.authToken=b436fa347b2c970e5a93000eda3053ef
-        String originalInput = "b436fa347b2c970e5a93000eda3053ef";
+        String originalInput = "test input";
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
         System.out.println(encodedString);
         byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
