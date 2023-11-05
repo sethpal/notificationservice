@@ -1,4 +1,4 @@
-package sepal.unittest.controller;
+package sepal.unittest;
 
 import com.sepal.notificationservice.dtos.NotificationRequestDto;
 import com.sepal.notificationservice.dtos.NotificationResponseDto;
@@ -28,7 +28,8 @@ public class SMSSericeTest {
         when(sendSMRService
                 .sendSMS(dto.getMessage(),dto.getMessage()))
                 .thenReturn(null);
-        assertNull(null);
+        assertNull(sendSMRService
+                .sendSMS(dto.getMessage(),dto.getMessage()));
     }
 
 
@@ -40,7 +41,8 @@ public class SMSSericeTest {
         when(sendSMRService
                 .sendSMS(any(String.class),any(String.class)))
                 .thenReturn(notificationResponseDto);
-        assertEquals(notificationResponseDto.getStatus(),"DELIVERED");
+        assertEquals(notificationResponseDto.getStatus(),sendSMRService
+                .sendSMS("+39656756735", "Test delivered SMS Notificaiton ").getStatus());
     }
     @Test
     void VerifyStatusIsFAILED() throws NullPointerException
@@ -50,31 +52,8 @@ public class SMSSericeTest {
         when(sendSMRService
                 .sendSMS(any(String.class),any(String.class)))
                 .thenReturn(notificationResponseDto);
-        assertEquals(notificationResponseDto.getStatus(),"FAILED");
+        assertEquals(notificationResponseDto.getStatus(),sendSMRService
+                .sendSMS("393656756735", "Test failed SMS Notificaiton ").getStatus());
     }
 
-
-    @Test
-    void encodeValue()
-    {
-        String originalInput = "test input";
-        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-        System.out.println(encodedString);
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-        String decodedString = new String(decodedBytes);
-        System.out.println(decodedString);
-
-    }
-
-    @Test
-    void encodeValue1()
-    {
-        String originalInput = "test input";
-        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-        System.out.println(encodedString);
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-        String decodedString = new String(decodedBytes);
-        System.out.println(decodedString);
-
-    }
 }

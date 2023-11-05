@@ -28,9 +28,9 @@ public class JsonMessageController {
     @PostMapping("/publish")
     public NotificationResponseDto sendJsonMessage(@RequestBody NotificationRequestDto user)
     {
-        String notification_added_in_Queue="Notification sent to registered email and mobile, kindly check your email/mobile";
-        jsonProducer.sendJsonMessage(user);
+        String notification_added_in_Queue=null;
         NotificationResponseDto notificationResponseDto =new NotificationResponseDto();
+        notification_added_in_Queue= jsonProducer.sendJsonMessage(user);
         notificationResponseDto.setStatus(notification_added_in_Queue);
         return notificationResponseDto;
     }

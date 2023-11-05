@@ -1,4 +1,4 @@
-package sepal.unittest.controller;
+package sepal.unittest;
 
 import com.sepal.notificationservice.dtos.NotificationRequestDto;
 import com.sepal.notificationservice.dtos.NotificationResponseDto;
@@ -28,7 +28,7 @@ public class MailServiceTest {
         when(sendEmailService
                 .sendEmail(dto.getMessage(),dto.getMessage(),dto.getMessage(),dto.getMessage()))
                 .thenReturn(null);
-        assertNull(null);
+        assertNull(sendEmailService.sendEmail(dto.getMessage(),dto.getMessage(),dto.getMessage(),dto.getMessage()));
     }
 
 
@@ -40,7 +40,7 @@ public class MailServiceTest {
         when(sendEmailService
                 .sendEmail(any(String.class),any(String.class),any(String.class),any(String.class)))
                 .thenReturn(notificationResponseDto);
-        assertEquals(notificationResponseDto.getStatus(),"DELIVERED");
+        assertEquals(String.valueOf(Status.DELIVERED),sendEmailService.sendEmail("ABC@test.com","delivered@test.com","delivered","message delivered body").getStatus());
     }
     @Test
     void VerifyStatusIsFAILED() throws NullPointerException
@@ -50,6 +50,6 @@ public class MailServiceTest {
         when(sendEmailService
                 .sendEmail(any(String.class),any(String.class),any(String.class),any(String.class)))
                 .thenReturn(notificationResponseDto);
-        assertEquals(notificationResponseDto.getStatus(),"FAILED");
+        assertEquals(String.valueOf(Status.FAILED),sendEmailService.sendEmail("ABC@test.com","toabc@test.com","subject","message body").getStatus());
     }
 }

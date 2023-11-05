@@ -1,6 +1,8 @@
 package com.sepal.notificationservice.consumer;
 
+import com.sepal.notificationservice.dtos.ConsumerResponseDto;
 import com.sepal.notificationservice.dtos.NotificationRequestDto;
+import com.sepal.notificationservice.dtos.NotificationResponseDto;
 import com.sepal.notificationservice.dtos.UserDto;
 import com.sepal.notificationservice.models.Notification;
 import com.sepal.notificationservice.models.Status;
@@ -58,6 +60,8 @@ public class RabbitMQJsonConsumner {
         */
 
         UserDto userDto=new UserDto();
+        NotificationResponseDto notificationResponseDto=new NotificationResponseDto();
+        ConsumerResponseDto consumerResponseDto=new ConsumerResponseDto();
 
         Optional<UserContact> userOptional;
         userOptional = userRepository.findById(Long.valueOf(notificationDto.getUserid()));
@@ -72,12 +76,12 @@ public class RabbitMQJsonConsumner {
             userDto.setEmail(userOptional.get().getEmail());
             userDto.setMobile(userOptional.get().getMobile());
 
-            sendEmailService.sendEmail(fromMail, userDto.getEmail(), emailSubject, notificationDto.getMessage());
-
+            notificationResponseDto=sendEmailService.sendEmail(fromMail, userDto.getEmail(), emailSubject, notificationDto.getMessage());
+            consumerResponseDto.setEmailStatus(notificationResponseDto.getStatus());
             String toNumber = "+917417331773"; // this need to be updated once i fetch the user mobile from the db
             //toNumber=userDto.getMobile(); //enable this when reading data from user table
-            sendSMSService.sendSMS(toNumber, notificationDto.getMessage());
-
+            notificationResponseDto=sendSMSService.sendSMS(toNumber, notificationDto.getMessage());
+            consumerResponseDto.setMobileStatus(notificationResponseDto.getStatus());
             Notification notification = new Notification();
             notification.setMessageDetails(notificationDto.getMessage());
             notification.setStatus((Status.DELIVERED));
@@ -86,6 +90,7 @@ public class RabbitMQJsonConsumner {
 
             notificationStatus = String.valueOf(Status.DELIVERED);
         }
+
     }
 
 
