@@ -1,4 +1,4 @@
-package sepal.unittest;
+package com.sepal.notificationservice.unittest;
 
 import com.sepal.notificationservice.dtos.NotificationHistoryResponseDto;
 import com.sepal.notificationservice.dtos.NotificationRequestDto;

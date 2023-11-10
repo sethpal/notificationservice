@@ -1,12 +1,10 @@
-package sepal.unittest;
+package com.sepal.notificationservice.unittest;
 
 import com.sepal.notificationservice.dtos.NotificationRequestDto;
 import com.sepal.notificationservice.dtos.NotificationResponseDto;
 import com.sepal.notificationservice.models.Status;
-import com.sepal.notificationservice.services.SendEmailService;
-
+import com.sepal.notificationservice.services.SendSMSService;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -14,21 +12,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-@SpringBootTest(classes= SendEmailService.class)
-public class MailServiceTest {
+import java.util.Base64;
+
+@SpringBootTest(classes= SendSMSService.class)
+public class SMSSericeTest {
 
     @MockBean
-    private SendEmailService sendEmailService;
+    private SendSMSService sendSMRService;
 
 
     @Test
-     void verifyStatusIsNull() throws NullPointerException
+    void verifyStatusIsNull() throws NullPointerException
     {
         NotificationRequestDto dto=new NotificationRequestDto();
-        when(sendEmailService
-                .sendEmail(dto.getMessage(),dto.getMessage(),dto.getMessage(),dto.getMessage()))
+        when(sendSMRService
+                .sendSMS(dto.getMessage(),dto.getMessage()))
                 .thenReturn(null);
-        assertNull(sendEmailService.sendEmail(dto.getMessage(),dto.getMessage(),dto.getMessage(),dto.getMessage()));
+        assertNull(sendSMRService
+                .sendSMS(dto.getMessage(),dto.getMessage()));
     }
 
 
@@ -37,19 +38,22 @@ public class MailServiceTest {
     {
         NotificationResponseDto notificationResponseDto=new NotificationResponseDto();
         notificationResponseDto.setStatus(String.valueOf(Status.DELIVERED));
-        when(sendEmailService
-                .sendEmail(any(String.class),any(String.class),any(String.class),any(String.class)))
+        when(sendSMRService
+                .sendSMS(any(String.class),any(String.class)))
                 .thenReturn(notificationResponseDto);
-        assertEquals(String.valueOf(Status.DELIVERED),sendEmailService.sendEmail("ABC@test.com","delivered@test.com","delivered","message delivered body").getStatus());
+        assertEquals(notificationResponseDto.getStatus(),sendSMRService
+                .sendSMS("+39656756735", "Test delivered SMS Notificaiton ").getStatus());
     }
     @Test
     void VerifyStatusIsFAILED() throws NullPointerException
     {
         NotificationResponseDto notificationResponseDto=new NotificationResponseDto();
         notificationResponseDto.setStatus(String.valueOf(Status.FAILED));
-        when(sendEmailService
-                .sendEmail(any(String.class),any(String.class),any(String.class),any(String.class)))
+        when(sendSMRService
+                .sendSMS(any(String.class),any(String.class)))
                 .thenReturn(notificationResponseDto);
-        assertEquals(String.valueOf(Status.FAILED),sendEmailService.sendEmail("ABC@test.com","toabc@test.com","subject","message body").getStatus());
+        assertEquals(notificationResponseDto.getStatus(),sendSMRService
+                .sendSMS("393656756735", "Test failed SMS Notificaiton ").getStatus());
     }
+
 }

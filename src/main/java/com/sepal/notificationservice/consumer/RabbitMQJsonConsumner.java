@@ -12,47 +12,60 @@ import com.sepal.notificationservice.repositories.UserRepository;
 import com.sepal.notificationservice.services.SendEmailService;
 import com.sepal.notificationservice.services.SendSMSService;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @Data
+@RequiredArgsConstructor
 public class RabbitMQJsonConsumner {
-    private static final Logger LOGGER= LoggerFactory.getLogger(RabbitMQJsonConsumner.class);
-    private final SendEmailService sendEmailService;
-    private final UserRepository userRepository;
-    private  String notificationStatus;
-    private final NotificationRepository notificationRepository;
 
-    private final SendSMSService sendSMSService;
+    private static final Logger LOGGER= LoggerFactory.getLogger(SendEmailService.class);
+    @Autowired
+    private  SendSMSService sendSMSService;
+
+    private  String notificationStatus;
+
     @Value("${spring.mail.username}")
     private String fromMail;
     @Value("${spring.mail.subject}")
     private String emailSubject;
+   @Autowired
+    private  SendEmailService sendEmailService;
+
+    @Autowired
+    private  UserRepository userRepository;
+
+    @Autowired
+    private  NotificationRepository notificationRepository;
 
 
     public RabbitMQJsonConsumner(SendEmailService sendEmailService
-                                 ,SendSMSService sendSMSService
-                                 ,UserRepository userRepository
-                                 ,NotificationRepository notificationRepository)
+                                 , SendSMSService sendSMSService
+                                 , UserRepository userRepository
+                                 , NotificationRepository notificationRepository)
     {
         this.sendEmailService = sendEmailService;
-        this.sendSMSService=sendSMSService;
-        this.userRepository=userRepository;
-        this.notificationRepository=notificationRepository;
-
+        this.userRepository = userRepository;
+        this.notificationRepository = notificationRepository;
+        this.sendSMSService = sendSMSService;
     }
 
     //Consumer is subscribed to the Queue
     @RabbitListener(queues = {"${rabbitmq.queue.json.name}"})
     public void consumeJsonMessage(NotificationRequestDto notificationDto){
         LOGGER.info(String .format("Json Message Received --> %s", notificationDto.toString()));
-
+        NotificationResponseDto notificationResponseDto= new NotificationResponseDto();
         /*
         In request body I will receive a user id
         For that user id I will fetch the user contact (email address and mobile number) from the user data table
@@ -60,7 +73,7 @@ public class RabbitMQJsonConsumner {
         */
 
         UserDto userDto=new UserDto();
-        NotificationResponseDto notificationResponseDto=new NotificationResponseDto();
+
         ConsumerResponseDto consumerResponseDto=new ConsumerResponseDto();
 
         Optional<UserContact> userOptional;
@@ -92,7 +105,5 @@ public class RabbitMQJsonConsumner {
         }
 
     }
-
-
 
 }

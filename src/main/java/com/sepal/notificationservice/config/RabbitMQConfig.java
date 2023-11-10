@@ -1,5 +1,6 @@
 package com.sepal.notificationservice.config;
 
+import lombok.Data;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -8,9 +9,11 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 
 @Configuration
+
 public class RabbitMQConfig {
     //Spring bean for RabbitMQ queue
     @Value("${rabbitmq.queue.name}")
@@ -88,4 +91,5 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
+
 }

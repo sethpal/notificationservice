@@ -56,7 +56,7 @@ Mail send is implemented
 SMS sending is implemented
 
 Task 4: Write unit tests for notification sending functionality.
-Status: In Progress
+Status: Done
 
 Task 5: Dockerize the service.
 Done

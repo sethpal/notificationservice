@@ -1,39 +1,33 @@
 package com.sepal.notificationservice;
 
-import com.sepal.notificationservice.config.TwilioConfig;
-import com.sepal.notificationservice.services.SendEmailService;
+
 import com.twilio.Twilio;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.event.EventListener;
 
-import java.util.Base64;
+import com.sepal.notificationservice.config.TwilioConfig;
+import org.springframework.context.annotation.Configuration;
 
-
-@SpringBootApplication
-@EnableConfigurationProperties
-
+@SpringBootApplication()
+@Configuration
 public class NotificationserviceApplication {
 
-	@Autowired
-	private TwilioConfig twilioConfig;
+	@Value("${twilio.accountSID}")
+	private String accountSSID;
 
-	@PostConstruct
-	public void setup()
-	{
-		Twilio.init(twilioConfig.decodeValue(twilioConfig.getAccountSID())
-				,twilioConfig.decodeValue(twilioConfig.getAuthToken()));
-	}
-
-
+	@Value("${twilio.authToken}")
+	private String auth;
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationserviceApplication.class, args);
 	}
 
+	@PostConstruct
+	public void setup()
+	{
 
-
+		Twilio.init(accountSSID,auth);
+	}
 }

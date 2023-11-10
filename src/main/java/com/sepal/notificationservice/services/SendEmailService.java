@@ -4,20 +4,25 @@ import com.sepal.notificationservice.dtos.NotificationResponseDto;
 import com.sepal.notificationservice.models.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Properties;
+
 @Service
-public class SendEmailService {
+@EnableAutoConfiguration
+public class SendEmailService  {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(SendEmailService.class);
+   // private static final Logger LOGGER= LoggerFactory.getLogger(SendEmailService.class);
 
-    private final JavaMailSender mailSender;
-
-    public SendEmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+    @Autowired
+    private JavaMailSender mailSender;
 
     public NotificationResponseDto sendEmail(
             String fromMail,
@@ -30,22 +35,18 @@ public class SendEmailService {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromMail);
             message.setTo(toEmail);
-            message.setText(body);
             message.setSubject(subject);
+            message.setText(body);
             mailSender.send(message);
-            LOGGER.info("Mail Sent Successfully........."+mailSender);
+           // LOGGER.info("Mail Sent Successfully........."+mailSender);
             notificationResponseDto.setStatus(String.valueOf(Status.DELIVERED));
         }catch(Exception ex)
         {
-            LOGGER.error("Error -->" + ex.getMessage());
+           // LOGGER.error("Error -->" + ex.getMessage());
             notificationResponseDto.setStatus(String.valueOf(Status.FAILED));
         }
         return notificationResponseDto;
     }
 
-    public String sendMail()
-    {
-        return "SENT";
-    }
 
 }
