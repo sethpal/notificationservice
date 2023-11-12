@@ -19,7 +19,7 @@ import java.util.Properties;
 @EnableAutoConfiguration
 public class SendEmailService  {
 
-   // private static final Logger LOGGER= LoggerFactory.getLogger(SendEmailService.class);
+    private static final Logger LOGGER= LoggerFactory.getLogger(SendEmailService.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -38,11 +38,11 @@ public class SendEmailService  {
             message.setSubject(subject);
             message.setText(body);
             mailSender.send(message);
-           // LOGGER.info("Mail Sent Successfully........."+mailSender);
+            LOGGER.info("Mail Sent Successfully........."+mailSender);
             notificationResponseDto.setStatus(String.valueOf(Status.DELIVERED));
         }catch(Exception ex)
         {
-           // LOGGER.error("Error -->" + ex.getMessage());
+            LOGGER.error("Error -->" + ex.getMessage());
             notificationResponseDto.setStatus(String.valueOf(Status.FAILED));
         }
         return notificationResponseDto;

@@ -22,7 +22,7 @@ public class TwilioConfig {
     private String authToken;
 
     private String fromNumber;
-    private String toNumber="+919538965414";
+    private String toNumber;
     public String decodeValue(String encodedValue)
     {
         byte[] decodedBytes = Base64.getDecoder().decode(encodedValue);

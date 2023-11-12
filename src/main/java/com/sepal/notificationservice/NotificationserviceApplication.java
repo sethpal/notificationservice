@@ -1,6 +1,7 @@
 package com.sepal.notificationservice;
 
 
+import com.netflix.discovery.EurekaNamespace;
 import com.twilio.Twilio;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.sepal.notificationservice.config.TwilioConfig;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.cloud.client.*;
+
 
 @SpringBootApplication()
 @Configuration
