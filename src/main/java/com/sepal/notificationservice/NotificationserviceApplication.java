@@ -12,7 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.sepal.notificationservice.config.TwilioConfig;
 import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication()
+import java.util.Base64;
+
+@SpringBootApplication
 @Configuration
 public class NotificationserviceApplication {
 
@@ -21,8 +23,7 @@ public class NotificationserviceApplication {
 
 	@Value("${twilio.authToken}")
 	private String auth;
-	@Autowired
-	TwilioConfig twilioConfig;
+
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationserviceApplication.class, args);
 	}
@@ -30,6 +31,18 @@ public class NotificationserviceApplication {
 	@PostConstruct
 	public void setup()
 	{
-		Twilio.init(twilioConfig.decodeValue(accountSSID),twilioConfig.decodeValue(auth));
+		Twilio.init(decodeValue(accountSSID),decodeValue(auth));
+	}
+	public String decodeValue(String encodedValue)
+	{
+		byte[] decodedBytes = Base64.getDecoder().decode(encodedValue);
+		return new String(decodedBytes);
+	}
+
+	public String  encodeValue(String encodedValue) {
+		String BasicBase64format
+				= Base64.getEncoder()
+				.encodeToString(encodedValue.getBytes());
+		return BasicBase64format;
 	}
 }
