@@ -42,7 +42,7 @@ public class SendEmailService  {
             notificationResponseDto.setStatus(String.valueOf(Status.DELIVERED));
         }catch(Exception ex)
         {
-            LOGGER.error("Error -->" + ex.getMessage());
+           // LOGGER.error("Error -->" + ex.getMessage());
             notificationResponseDto.setStatus(String.valueOf(Status.FAILED));
         }
         return notificationResponseDto;

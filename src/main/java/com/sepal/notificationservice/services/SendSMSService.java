@@ -23,7 +23,7 @@ public class SendSMSService {
         try {
             Message  message = Message
                     .creator(new PhoneNumber(to)
-                            , new PhoneNumber(twilioConfig.decodeValue(twilioConfig.getFromNumber()))
+                            , new PhoneNumber(twilioConfig.getFromNumber())
                             , sms)
                     .create();
             notificationResponseDto.setStatus(String.valueOf(Status.DELIVERED));

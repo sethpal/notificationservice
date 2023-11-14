@@ -8,7 +8,7 @@ import com.sepal.notificationservice.models.Notification;
 import com.sepal.notificationservice.models.Status;
 import com.sepal.notificationservice.models.UserContact;
 import com.sepal.notificationservice.repositories.NotificationRepository;
-import com.sepal.notificationservice.repositories.UserContactRepository;
+import com.sepal.notificationservice.repositories.UserRepository;
 import com.sepal.notificationservice.services.SendEmailService;
 import com.sepal.notificationservice.services.SendSMSService;
 import lombok.Data;
@@ -18,6 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -41,7 +44,7 @@ public class RabbitMQJsonConsumner {
     private  SendEmailService sendEmailService;
 
     @Autowired
-    private UserContactRepository userRepository;
+    private  UserRepository userRepository;
 
     @Autowired
     private  NotificationRepository notificationRepository;
@@ -49,7 +52,7 @@ public class RabbitMQJsonConsumner {
 
     public RabbitMQJsonConsumner(SendEmailService sendEmailService
                                  , SendSMSService sendSMSService
-                                 , UserContactRepository userRepository
+                                 , UserRepository userRepository
                                  , NotificationRepository notificationRepository)
     {
         this.sendEmailService = sendEmailService;

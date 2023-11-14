@@ -1,32 +1,25 @@
-package com.sepal.notificationservice.services;
+package com.sepal.notificationservice.producer;
 
 import com.sepal.notificationservice.dtos.NotificationRequestDto;
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 @Service
-@Data
-@Configuration
-public class RabbitMQJsonProducerService {
+public class RabbitMQJsonProducer {
 
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(RabbitMQJsonProducerService.class);
+    private static final Logger LOGGER= LoggerFactory.getLogger(RabbitMQJsonProducer.class);
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
     @Value("${rabbitmq.json.routing.key}")
     private String jsonRoutingKey;
+    private RabbitTemplate rabbitTemplate;
 
-
-    private  RabbitTemplate rabbitTemplate;
-
-    public RabbitMQJsonProducerService(RabbitTemplate rabbitTemplate) {
-        System.out.println("RabbitMQJsonProducerService Constructor");
-       this.rabbitTemplate = rabbitTemplate;
+    public RabbitMQJsonProducer(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     public String sendJsonMessage(NotificationRequestDto user)

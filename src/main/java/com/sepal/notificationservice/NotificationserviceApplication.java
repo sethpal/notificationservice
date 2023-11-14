@@ -1,18 +1,16 @@
 package com.sepal.notificationservice;
 
 
-import com.netflix.discovery.EurekaNamespace;
 import com.twilio.Twilio;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.sepal.notificationservice.config.TwilioConfig;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.cloud.client.*;
-
 
 @SpringBootApplication()
 @Configuration
@@ -23,6 +21,8 @@ public class NotificationserviceApplication {
 
 	@Value("${twilio.authToken}")
 	private String auth;
+	@Autowired
+	TwilioConfig twilioConfig;
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationserviceApplication.class, args);
 	}
@@ -30,7 +30,6 @@ public class NotificationserviceApplication {
 	@PostConstruct
 	public void setup()
 	{
-
-		Twilio.init(accountSSID,auth);
+		Twilio.init(twilioConfig.decodeValue(accountSSID),twilioConfig.decodeValue(auth));
 	}
 }
