@@ -49,6 +49,8 @@ public class RabbitMQJsonConsumner {
 
     @Autowired
     private  NotificationRepository notificationRepository;
+
+    @Autowired
     private UserService userService;
 
 
