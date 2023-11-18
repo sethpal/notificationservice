@@ -11,6 +11,7 @@ import com.sepal.notificationservice.repositories.NotificationRepository;
 import com.sepal.notificationservice.repositories.UserRepository;
 import com.sepal.notificationservice.services.SendEmailService;
 import com.sepal.notificationservice.services.SendSMSService;
+import com.sepal.notificationservice.services.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -48,17 +49,21 @@ public class RabbitMQJsonConsumner {
 
     @Autowired
     private  NotificationRepository notificationRepository;
+    private UserService userService;
 
 
     public RabbitMQJsonConsumner(SendEmailService sendEmailService
                                  , SendSMSService sendSMSService
                                  , UserRepository userRepository
-                                 , NotificationRepository notificationRepository)
+                                 , NotificationRepository notificationRepository
+                                 ,UserService userService
+                                    )
     {
         this.sendEmailService = sendEmailService;
         this.userRepository = userRepository;
         this.notificationRepository = notificationRepository;
         this.sendSMSService = sendSMSService;
+        this.userService=userService;
     }
 
     //Consumer is subscribed to the Queue
@@ -78,7 +83,8 @@ public class RabbitMQJsonConsumner {
 
         Optional<UserContact> userOptional;
         userOptional = userRepository.findById(Long.valueOf(notificationDto.getUserid()));
-
+        //below line need to enable once the User Service is working fine
+        //userDto=userService.getUserById(Long.valueOf(notificationDto.getUserid()));
         //Check if user is present in DB or not
         if(userOptional.isEmpty()){
             notificationStatus= String.valueOf(Status.FAILED);
@@ -100,7 +106,6 @@ public class RabbitMQJsonConsumner {
             notification.setStatus((Status.DELIVERED));
             notification.setUser_id(notificationDto.getUserid());
             notificationRepository.save(notification);
-
             notificationStatus = String.valueOf(Status.DELIVERED);
         }
 
