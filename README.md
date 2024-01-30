@@ -74,7 +74,7 @@ Commands to enable RabbitMQ
 C:\Users\Ravit>docker pull rabbitmq:3.11.11-management
 C:\Users\Ravit>docker run -d --hostname rabbit --name rabbit-server -p 15762:15672 -p 5672:5672 rabbitmq:3.11.11-management
 
-<img src="images/rabbitmq_structure.png"/>
+<img src="./images/rabbitmq_structure.png" title="RabbitMQ Structure" alt="RabbitMQ Structure"/>
 
 Task 7: Implement API for fetching notification history.
 Done

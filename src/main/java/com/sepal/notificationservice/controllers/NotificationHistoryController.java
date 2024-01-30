@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/notification")
 public class NotificationHistoryController {
     @Autowired
     NotificationHistoryService notificationHistoryService;
